@@ -1,7 +1,7 @@
 -- Scripts Cote client / Par Gaya
 
 -- 
-local config = {}
+local zones = {}
 
 function KillPlayer()
 	local _player = PlayerPedId()
@@ -12,41 +12,43 @@ end
 function Start(i)
 	
 	local blip = nil
-	config = Config
-	local Distance = Vdist(config[i].CoordCenter, Config[i].CoordBorder)
+	zones = Zones
+	local Distance = Vdist(zones[i].CoordCenter, Zones[i].CoordBorder)
 	local DistanceBlip = Distance
 
 	Citizen.CreateThread(function()
-		local x,y,z = table.unpack(config[i].CoordCenter)
+		local x,y,z = table.unpack(zones[i].CoordCenter)
 		local DeathCt = TimeBeforeKill
+
 		 while true do
 			local playerCoords = GetEntityCoords(PlayerPedId())
 
-			if Vdist(playerCoords, config[i].CoordCenter) > Distance then
+			if Vdist(playerCoords, zones[i].CoordCenter) > Distance then
 				if blip ~= nil then
 					RemoveBlip(blip)
 					blip = nil
 
-					TriggerEvent("vorp:TipBottom", MessageReturnSafe, 5000)
-					DeathCt = TimeBeforeKill
+					TriggerEvent("vorp:TipBottom", MessageReturnSafe, 3000)
 				end
+
 				if DeathCt < TimeBeforeKill then
-					DeathCt = DeathCt + 1
+					DeathCt = DeathCt + 5
 				end
 			else
 				if blip == nil then
 					blip = Citizen.InvokeNative(0x45f13b7e0a15c880, -1282792512,x, y, z, DistanceBlip)
-					TriggerEvent("vorp:TipBottom", MessageBeforeKill, 5000)
-
+					TriggerEvent("vorp:TipBottom", MessageBeforeKill, 20000)
 				end
-				DeathCt = DeathCt - 1
-				TriggerEvent("vorp:TipRight", DeathCt,1000)
+
+				DeathCt = DeathCt - 5
+				TriggerEvent("vorp:TipRight", DeathCt,2000)
+				
 				if DeathCt <= 0 then
 					KillPlayer()
 					DeathCt = TimeBeforeKill
 				end
 			end
-			Citizen.Wait(1000)
+			Citizen.Wait(5000)
 		end 
 	end)
 end
@@ -55,7 +57,7 @@ end
 RegisterNetEvent("Arkios:StartZoneLocker")
 AddEventHandler("Arkios:StartZoneLocker", function()
 	
-	for i,v in ipairs(Config)  do
+	for i,v in ipairs(Zones)  do
 		Start(i)
 	end
 	print("Chargement des zones Réussies.")

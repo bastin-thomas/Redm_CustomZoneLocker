@@ -12,4 +12,4 @@ server_script {
 	'config.lua',
 	'server.lua'
 }
-dependency 'vorp_inventory'
+dependency 'vorp_core'
