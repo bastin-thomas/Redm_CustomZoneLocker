@@ -60,5 +60,5 @@ AddEventHandler("Arkios:StartZoneLocker", function()
 	for i,v in ipairs(Zones)  do
 		Start(i)
 	end
-	print("Chargement des zones Réussies.")
+	print("Loading of LockedZone Succesfull")
 end)
