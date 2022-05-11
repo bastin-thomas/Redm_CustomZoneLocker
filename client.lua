@@ -30,7 +30,6 @@ function Start(i)
 
 					TriggerEvent("vorp:TipBottom", MessageReturnSafe, 3000)
 				end
-
 				if DeathCt < TimeBeforeKill then
 					DeathCt = DeathCt + 5
 				end
@@ -41,8 +40,9 @@ function Start(i)
 				end
 
 				DeathCt = DeathCt - 5
-				TriggerEvent("vorp:TipRight", DeathCt,2000)
-				
+				if(NotifyTimer == true) then
+					TriggerEvent("vorp:TipRight", DeathCt,5000)
+				end
 				if DeathCt <= 0 then
 					KillPlayer()
 					DeathCt = TimeBeforeKill
@@ -56,9 +56,8 @@ end
 
 RegisterNetEvent("Arkios:StartZoneLocker")
 AddEventHandler("Arkios:StartZoneLocker", function()
-	
 	for i,v in ipairs(Zones)  do
 		Start(i)
 	end
-	print("Loading of LockedZone Succesfull")
+	print("Loading of zones Succesfull")
 end)

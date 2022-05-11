@@ -1,8 +1,10 @@
 
 --TimeBeforeKill
-TimeBeforeKill = 45 --in sec
+TimeBeforeKill = 30 --in sec
 MessageBeforeKill = "Vous quittées les terres connues, vous allez vous perdre dans 30 secondes (Mort)." -- You have Enter the DeadZone
 MessageReturnSafe = "Ouf, vous avez retrouvé votre chemin vers les terres connues." -- You have quit the DeadZone
+
+NotifyTimer = true; -- Set To False if you didn't want dynamic Timer.
 
 --Area, for add new one, copy one Row
 Zones = {
@@ -26,5 +28,4 @@ Zones = {
         CoordCenter = vector3(3199.56, 1213.42, 41.65),     -- center
         CoordBorder = vector3(2538.58, 1486.99, 85.84)     -- Border of the Circle
     }
-    
 }
